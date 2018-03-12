@@ -4,20 +4,32 @@
  */
 class MissAttribute {
 
-    /**
-     * @param {String} tag          Tag name     
-     * @param {String} attribute    Attribute name
-     */
-    constructor({ tag, attribute }) {
+    constructor(tag, attributes) {   
         this.tag = tag
-        this.attribute = attribute
+        this.attributes = attributes
     }
 
-    /**
-     * @returns String  CSS selector
-     */
     toSelector() {
-        return `${this.tag}:not([${this.attribute}])`
+        let selector = this.tag
+        for (let i in this.attributes) {
+            if (this.attributes[i]) {
+                selector += `:not([${i}=${this.attributes[i]}])`
+            } else {
+                selector += `:not([${i}])`
+            }
+        }
+        return selector
+    }
+
+    check(domQuery) {
+        const num = domQuery.count(this.selector)
+        if (num > 0) {
+            const attrNames = Object.keys(this.attributes).join(', ')
+            return num > 1 ? 
+                `There are ${num} ${this.tag} tags without ${attrNames}` :
+                `There is 1 ${this.tag} tag without ${attrNames}`
+        }
+        return null
     }
 }
 

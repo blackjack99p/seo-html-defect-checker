@@ -4,29 +4,25 @@
  */
 class MissTag {
 
-    /**
-     * @param {String} tag          Tag name     
-     * @param {String} attribute    Attribute name
-     * @param {String} parent       Parent tag name 
-     */
-    constructor({ tag, attribute = null, parent = null }) {
+    constructor(tag, attributes) {   
         this.tag = tag
-        this.attribute = attribute
-        this.parent = parent
+        this.attributes = attributes
     }
 
-    /**
-     * @returns String
-     */
     toSelector() {
         let selector = this.tag
-        if (this.attribute) {
-            selector += `[${this.attribute}]`
-        }
-        if (this.parent) {
-            selector = `${this.parent} > ${selector}`
+        for (let i in this.attributes) {
+            if (this.attributes[i]) {
+                selector += `[${i}=${this.attributes[i]}]`
+            } else {
+                selector += `[${i}]`
+            }
         }
         return selector
+    }
+
+    check() {
+        return null
     }
 }
 
