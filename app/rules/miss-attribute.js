@@ -4,7 +4,7 @@
  */
 class MissAttribute {
 
-    constructor(tag, attributes) {   
+    constructor(tag, attributes) {
         this.tag = tag
         this.attributes = attributes
     }
@@ -22,12 +22,12 @@ class MissAttribute {
     }
 
     check(domQuery) {
-        const num = domQuery.count(this.selector)
+        const num = domQuery.count(this.toSelector())
         if (num > 0) {
             const attrNames = Object.keys(this.attributes).join(', ')
-            return num > 1 ? 
-                `There are ${num} ${this.tag} tags without ${attrNames}` :
-                `There is 1 ${this.tag} tag without ${attrNames}`
+            return num > 1 ?
+                `There are ${num} <${this.tag}> tags without ${attrNames}` :
+                `There is 1 <${this.tag}> tag without ${attrNames}`
         }
         return null
     }

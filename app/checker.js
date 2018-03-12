@@ -1,21 +1,22 @@
 
 class Checker {
 
-    countTags(domQuery, selector) {
-        return domQuery(selector).length
+    /**
+     * @param htmlText
+     * @param rules
+     */
+    check(htmlText, rules) {
+        const dom = new DomQuery(htmlText)
+        let results = []
+        rules.forEach(rule => {
+            let rs = rule.check(dom)
+            if (rs) {
+                results.push(rs)
+            }
+        });
+        return results
     }
 
-    /**
-     * 
-     * @param domQuery 
-     * @param array rules 
-     */
-    check(domQuery, rules) {
-        let results = []
-        rules.forEach(element => {
-            
-        });
-    }
 }
 
 module.exports = { Checker }
