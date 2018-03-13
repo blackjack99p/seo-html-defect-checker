@@ -1,5 +1,5 @@
 # SEO HTML defect checker
-Lighweight module for checking SEO HTML defect elements.
+Lightweight module for checking SEO HTML defect elements.
 
 <b>Built for</b>
 - [NodeJS](https://nodejs.org)

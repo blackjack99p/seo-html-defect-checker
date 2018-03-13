@@ -1,5 +1,7 @@
 const stream = require('stream')
 const fs = require('fs')
+const rules = require('./rules')
+const DomQuery = require('./utils').DomQuery
 
 /**
  * I borrow this function from https://stackoverflow.com/a/28575015 with fix style
@@ -43,15 +45,22 @@ function writeOuputResult(output, results) {
 
 class Checker {
 
-    constructor(input, output) {
+    /**
+     *
+     * @param {string|stream.Readable} input
+     * @param {console|stream.Writable|string} output
+     */
+    constructor(input, output = null) {
         this.input = input
-        this.output = output
+        this.output = output ? output : console
+        // @todo verify input, output
     }
 
     /**
      * @param rules
      */
     check(rules) {
+        const htmlText = getInputText(this.input)
         const dom = new DomQuery(htmlText)
         let results = []
         rules.forEach(rule => {
@@ -60,11 +69,22 @@ class Checker {
                 results.push(rs)
             }
         });
-        return results
+        this.results = results
+        return this
     }
 
+    getResults() {
+        return this.results
+    }
+
+    writeResults() {
+        writeOuputResult(this.output, this.results)
+        return this
+    }
+
+    isPass() {
+        return typeof this.results === 'array' && this.results.length === 0
+    }
 }
 
-module.exports = {
-    Checker
-}
+module.exports = Checker

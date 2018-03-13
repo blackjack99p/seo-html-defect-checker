@@ -7,11 +7,11 @@ const aTagWithoutRel = new MissAttribute('a', {rel: null})
 
 const imgTagWithoutAlt = new MissAttribute('img', {alt: null})
 
-const dontHaveTitle = new MissTag('head > title', {})
+const dontHaveTitle = new MissTag('title', {}, 'head >')
 
-const dontHaveMetaDescription = new MissTag('head > meta', {name: 'descriptions'})
+const dontHaveMetaDescription = new MissTag('meta', {name: 'descriptions'}, 'head >')
 
-const dontHaveMetaKeywords = new MissTag('head > meta', {name: 'keywords'})
+const dontHaveMetaKeywords = new MissTag('meta', {name: 'keywords'}, 'head >')
 
 const moreThan15StrongTag = new MoreTagThan('strong', {}, 15)
 
