@@ -16,6 +16,9 @@ const htmlText = `
             <a href="http://shop.com">this is a link</a>
             <img src="1.jpg">
             <img src="2.jpg" alt="pic">
+            <div class="box">
+                <img src="3.jpg">
+            </div>
         </body>
     </html>
 `
@@ -54,6 +57,14 @@ test('check: img tag without alt', () => {
     const r = new MissAttributeRule('img', {
         alt: null,
     })
+    const dom = new DomQuery(htmlText)
+    expect(r.check(dom)).toBe('There are 2 <img> tags without alt')
+})
+
+test('check: img tag without alt ', () => {
+    const r = new MissAttributeRule('img', {
+        alt: null,
+    }, '.box')
     const dom = new DomQuery(htmlText)
     expect(r.check(dom)).toBe('There is 1 <img> tag without alt')
 })

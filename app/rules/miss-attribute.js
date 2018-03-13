@@ -4,13 +4,14 @@
  */
 class MissAttribute {
 
-    constructor(tag, attributes) {
+    constructor(tag, attributes, preselector = null) {
         this.tag = tag
         this.attributes = attributes
+        this.preselector = preselector
     }
 
     toSelector() {
-        let selector = this.tag
+        let selector = this.preselector ? `${this.preselector} ${this.tag}` : this.tag
         for (let i in this.attributes) {
             if (this.attributes[i]) {
                 selector += `:not([${i}=${this.attributes[i]}])`

@@ -4,13 +4,14 @@
  */
 class MissTag {
 
-    constructor(tag, attributes) {   
+    constructor(tag, attributes, preselector = null) {
         this.tag = tag
         this.attributes = attributes
+        this.preselector = preselector
     }
 
     toSelector() {
-        let selector = this.tag
+        let selector = this.preselector ? `${this.preselector} ${this.tag}` : this.tag
         for (let i in this.attributes) {
             if (this.attributes[i]) {
                 selector += `[${i}=${this.attributes[i]}]`
@@ -21,7 +22,12 @@ class MissTag {
         return selector
     }
 
-    check() {
+    check(domQuery) {
+        const num = domQuery.count(this.toSelector())
+        if (num === 0) {
+            const attrNames = Object.keys(this.attributes).join(', ')
+            return `This HTML without <${this.tag}> tag` + (attrNames.length > 0 ? ` ${attrNames}` : '')
+        }
         return null
     }
 }
