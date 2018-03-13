@@ -1,23 +1,24 @@
 
-const MissAttribute = require('./miss-attribute')
-const MissTag = require('./miss-tag')
-const MoreTagThan = require('./more-tag-than')
+const MissAttributeRule = require('./miss-attribute')
+const MissTagRule = require('./miss-tag')
+const MoreTagThanRule = require('./more-tag-than')
+const CustomRule = require('./custom-rule')
 
-const aTagWithoutRel = new MissAttribute('a', {rel: null})
+const aTagWithoutRel = new MissAttributeRule('a', {rel: null})
 
-const imgTagWithoutAlt = new MissAttribute('img', {alt: null})
+const imgTagWithoutAlt = new MissAttributeRule('img', {alt: null})
 
-const dontHaveTitle = new MissTag('title', {}, 'head >')
+const dontHaveTitle = new MissTagRule('title', {}, 'head >')
 
-const dontHaveMetaDescription = new MissTag('meta', {name: 'descriptions'}, 'head >')
+const dontHaveMetaDescription = new MissTagRule('meta', {name: 'descriptions'}, 'head >')
 
-const dontHaveMetaKeywords = new MissTag('meta', {name: 'keywords'}, 'head >')
+const dontHaveMetaKeywords = new MissTagRule('meta', {name: 'keywords'}, 'head >')
 
-const moreThan15StrongTag = new MoreTagThan('strong', {}, null, 15)
+const moreThan15StrongTag = new MoreTagThanRule('strong', {}, null, 15)
 
-const moreThan1H1Tag = new MoreTagThan('h1', {}, null, 1)
+const moreThan1H1Tag = new MoreTagThanRule('h1', {}, null, 1)
 
-const defaultDefinedRules = [
+const defaultRuleList = [
     aTagWithoutRel,
     imgTagWithoutAlt,
     dontHaveTitle,
@@ -28,12 +29,18 @@ const defaultDefinedRules = [
 ]
 
 module.exports = {
-    defaultDefinedRules,
-    aTagWithoutRel,
-    imgTagWithoutAlt,
-    dontHaveTitle,
-    dontHaveMetaDescription,
-    dontHaveMetaKeywords,
-    moreThan15StrongTag,
-    moreThan1H1Tag
+    definedRules : {
+        defaultRuleList,
+        aTagWithoutRel,
+        imgTagWithoutAlt,
+        dontHaveTitle,
+        dontHaveMetaDescription,
+        dontHaveMetaKeywords,
+        moreThan15StrongTag,
+        moreThan1H1Tag,
+    },
+    MissAttributeRule,
+    MissTagRule,
+    MoreTagThanRule,
+    CustomRule,
 }

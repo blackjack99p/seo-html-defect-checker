@@ -1,3 +1,4 @@
+const Converter = require('../utils/converter')
 
 /**
  * Miss attribute rule
@@ -25,7 +26,7 @@ class MissAttribute {
     check(domQuery) {
         const num = domQuery.count(this.toSelector())
         if (num > 0) {
-            const attrNames = Object.keys(this.attributes).join(', ')
+            const attrNames = Converter.convertObjectToString(this.attributes)
             return num > 1 ?
                 `There are ${num} <${this.tag}> tags without ${attrNames}` :
                 `There is 1 <${this.tag}> tag without ${attrNames}`

@@ -3,22 +3,14 @@ const fs = require('fs')
 const DomQuery = require('./utils').DomQuery
 
 /**
- * I borrow this function from https://stackoverflow.com/a/28575015 with fix style
- *
- * @param {stream.Readable} obj
+ * @param {object} obj
  */
 function isReadableStream(obj) {
-    return typeof obj === 'object' &&
-        obj instanceof stream.Readable &&
-        typeof obj._read === 'function' &&
-        typeof obj._readableState === 'object'
+    return typeof obj === 'object' && obj instanceof stream.Readable
 }
 
 function isWritableStream(obj) {
-    return typeof obj === 'object' &&
-        obj instanceof stream.Writable &&
-        typeof obj._write === 'function' &&
-        typeof obj._writeableState === 'object'
+    return typeof obj === 'object' && obj instanceof stream.Writable
 }
 
 function getInputText(input) {
@@ -77,7 +69,8 @@ class Checker {
     }
 
     writeResults() {
-        writeOuputResult(this.output, this.results)
+        let outputText = this.results.length > 0 ? this.results.join('\n') : 'All tests are passed.'
+        writeOuputResult(this.output, outputText)
         return this
     }
 
