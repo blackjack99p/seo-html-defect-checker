@@ -1,6 +1,5 @@
 const stream = require('stream')
 const fs = require('fs')
-const rules = require('./rules')
 const DomQuery = require('./utils').DomQuery
 
 /**
@@ -36,7 +35,7 @@ function writeOuputResult(output, results) {
         output.log(results)
     }
     else if (isWritableStream(output)) {
-        input.write(results)
+        output.write(results)
     }
     else if (typeof output === 'string') {
         fs.writeFileSync(output, results)
@@ -68,7 +67,7 @@ class Checker {
             if (rs) {
                 results.push(rs)
             }
-        });
+        })
         this.results = results
         return this
     }
@@ -83,7 +82,7 @@ class Checker {
     }
 
     isPass() {
-        return typeof this.results === 'array' && this.results.length === 0
+        return Array.isArray(this.results) && this.results.length === 0
     }
 }
 

@@ -17,7 +17,7 @@ const htmlText = `
             </div>
         </body>
     </html>
-`;
+`
 
 const $ = cheerio.load(htmlText)
 

@@ -1,3 +1,4 @@
+const Converter = require('../utils/converter')
 
 /**
  * Miss tag rule
@@ -25,8 +26,8 @@ class MissTag {
     check(domQuery) {
         const num = domQuery.count(this.toSelector())
         if (num === 0) {
-            const attrNames = Object.keys(this.attributes).join(', ')
-            return `This HTML without <${this.tag}> tag` + (attrNames.length > 0 ? ` ${attrNames}` : '')
+            const attrNames = Converter.convertObjectToString(this.attributes)
+            return `This HTML without <${this.tag}> tag` + (attrNames.length > 0 ? ` with ${attrNames}` : '')
         }
         return null
     }

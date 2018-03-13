@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest tests"
+    "test": "jest tests",
+    "lint": "eslint app/**.js src/**.js",
+    "lint:fix": "eslint --fix app/**.js src/**.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,12 @@
     "cheerio": "^1.0.0-rc.2"
   },
   "devDependencies": {
+    "eslint": "^4.18.2",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-jest": "^21.14.0",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "index.js": "^0.0.3",
     "jest": "^22.4.2"
   }
 }

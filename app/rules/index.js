@@ -13,9 +13,9 @@ const dontHaveMetaDescription = new MissTag('meta', {name: 'descriptions'}, 'hea
 
 const dontHaveMetaKeywords = new MissTag('meta', {name: 'keywords'}, 'head >')
 
-const moreThan15StrongTag = new MoreTagThan('strong', {}, 15)
+const moreThan15StrongTag = new MoreTagThan('strong', {}, null, 15)
 
-const moreThan1H1Tag = new MoreTagThan('h1', {}, 1)
+const moreThan1H1Tag = new MoreTagThan('h1', {}, null, 1)
 
 const defaultDefinedRules = [
     aTagWithoutRel,

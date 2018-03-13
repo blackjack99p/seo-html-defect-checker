@@ -32,6 +32,5 @@ test('load break html', () => {
         </body></html>
     `
     const breakDom = new DomQuery(breakHtml)
-    console.log(breakDom)
     expect(breakDom.count('p')).toBe(1)
 })
