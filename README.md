@@ -138,6 +138,42 @@ c.check([r4], results => {
 ```
 
 ## API
+<details>
+  <summary>Checker</summary>
+
+  - constructor(input, output)
+    * input is text or stream reader
+    * output is file path or stream writer or console
+  - check(rules, cb)
+    * rules is an array list, contains rule object
+    * cb is callback function with first parameter is results (array) of check
+
+</details>
+<details>
+  <summary>Rules.CustomRule</summary>
+
+  - constructor(tag, attributes, prefix, cb)
+  - check(domQuery)
+</details>
+<details>
+  <summary>Rules.MissAttributeRule</summary>
+
+  - constructor(tag, attributes, prefix)
+  - check(domQuery)
+</details>
+<details>
+  <summary>Rules.MissTag</summary>
+
+  - constructor(tag, attributes, prefix)
+  - check(domQuery)
+</details>
+<details>
+  <summary>Rules.MoreTagThan</summary>
+
+  - constructor(tag, attributes, prefix, specificNumber)
+  - check(domQuery)
+</details>
+
 
 ## Features
 
