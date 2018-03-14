@@ -1,7 +1,0 @@
-There is 1 <a> tag without rel
-There are 2 <img> tags without alt
-This HTML without <title> tag
-This HTML without <meta> tag with name=descriptions
-This HTML without <meta> tag with name=keywords
-This HTML have more than 15 <strong> tag(s)
-This HTML have more than 1 <h1> tag(s)

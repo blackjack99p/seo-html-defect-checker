@@ -1,5 +1,7 @@
 const fs = require('fs')
 const path = require('path')
+const request = require('request')
+
 const Checker = require('../app/checker')
 const rules = require('../app/rules')
 
@@ -56,74 +58,85 @@ const validHtmlText = `
 
 test('img tag without alt', () => {
     const c = new Checker(invalidHtmlText)
-    const results = c.check([rules.definedRules.imgTagWithoutAlt]).getResults()
-    expect(results).toContain('There are 2 <img> tags without alt')
+    c.check([rules.definedRules.imgTagWithoutAlt], (results) => {
+        expect(results).toContain('There are 2 <img> tags without alt')
+    })
 })
 
 test('a tag without rel', () => {
     const c = new Checker(invalidHtmlText)
-    const results = c.check([rules.definedRules.aTagWithoutRel]).getResults()
-    expect(results).toContain('There is 1 <a> tag without rel')
+    c.check([rules.definedRules.aTagWithoutRel], (results) => {
+        expect(results).toContain('There is 1 <a> tag without rel')
+    })
 })
 
 test('miss title tag', () => {
     const c = new Checker(invalidHtmlText)
-    const results = c.check([rules.definedRules.dontHaveTitle]).getResults()
-    expect(results).toContain('This HTML without <title> tag')
+    c.check([rules.definedRules.dontHaveTitle], results => {
+        expect(results).toContain('This HTML without <title> tag')
+    })
 })
 
 test('miss title tag with valid html', () => {
     const c = new Checker(validHtmlText)
-    const results = c.check([rules.definedRules.dontHaveTitle]).getResults()
-    expect(results.length).toBe(0)
+    c.check([rules.definedRules.dontHaveTitle], results => {
+        expect(results.length).toBe(0)
+    })
 })
 
 test('miss meta with name=descriptions attribute', () => {
     const c = new Checker(invalidHtmlText)
-    const results = c.check([rules.definedRules.dontHaveMetaDescription]).getResults()
-    expect(results).toContain('This HTML without <meta> tag with name=descriptions')
+    c.check([rules.definedRules.dontHaveMetaDescription], results => {
+        expect(results).toContain('This HTML without <meta> tag with name=descriptions')
+    })
 })
 
 test('miss meta with name=descriptions attribute with valid html', () => {
     const c = new Checker(validHtmlText)
-    const results = c.check([rules.definedRules.dontHaveMetaDescription]).getResults()
-    expect(results.length).toBe(0)
+    c.check([rules.definedRules.dontHaveMetaDescription], results => {
+        expect(results.length).toBe(0)
+    })
 })
 
 test('miss meta with name=keywords attribute', () => {
     const c = new Checker(invalidHtmlText)
-    const results = c.check([rules.definedRules.dontHaveMetaKeywords]).getResults()
-    expect(results).toContain('This HTML without <meta> tag with name=keywords')
+    c.check([rules.definedRules.dontHaveMetaKeywords], results => {
+        expect(results).toContain('This HTML without <meta> tag with name=keywords')
+    })
 })
 
 test('have more than 15 strong tag', () => {
     const c = new Checker(invalidHtmlText)
-    const results = c.check([rules.definedRules.moreThan15StrongTag]).getResults()
-    expect(results).toContain('This HTML have more than 15 <strong> tag(s)')
+    c.check([rules.definedRules.moreThan15StrongTag], results => {
+        expect(results).toContain('This HTML have more than 15 <strong> tag(s)')
+    })
 })
 
 test('have more than 1 h1 tag', () => {
     const c = new Checker(invalidHtmlText)
-    const results = c.check([rules.definedRules.moreThan1H1Tag]).getResults()
-    expect(results).toContain('This HTML have more than 1 <h1> tag(s)')
+    c.check([rules.definedRules.moreThan1H1Tag], results => {
+        expect(results).toContain('This HTML have more than 1 <h1> tag(s)')
+    })
 })
 
 test('test all defined rules', () => {
     const c = new Checker(invalidHtmlText)
-    const results = c.check(rules.definedRules.defaultRuleList).getResults()
-    expect(results).toContain('There are 2 <img> tags without alt')
-    expect(results).toContain('There is 1 <a> tag without rel')
-    expect(results).toContain('This HTML without <meta> tag with name=keywords')
-    expect(results).toContain('This HTML without <meta> tag with name=descriptions')
-    expect(results).toContain('This HTML without <title> tag')
-    expect(results).toContain('This HTML have more than 15 <strong> tag(s)')
-    expect(results).toContain('This HTML have more than 1 <h1> tag(s)')
+    c.check(rules.definedRules.defaultRuleList, results => {
+        expect(results).toContain('There are 2 <img> tags without alt')
+        expect(results).toContain('There is 1 <a> tag without rel')
+        expect(results).toContain('This HTML without <meta> tag with name=keywords')
+        expect(results).toContain('This HTML without <meta> tag with name=descriptions')
+        expect(results).toContain('This HTML without <title> tag')
+        expect(results).toContain('This HTML have more than 15 <strong> tag(s)')
+        expect(results).toContain('This HTML have more than 1 <h1> tag(s)')
+    })
 })
 
 test('test all defined rules with valid html', () => {
     const c = new Checker(validHtmlText)
-    const results = c.check(rules.definedRules.defaultRuleList).getResults()
-    expect(results.length).toBe(0)
+    c.check(rules.definedRules.defaultRuleList, results => {
+        expect(results.length).toBe(0)
+    })
 })
 
 test('custom 1: miss content c# for meta', () => {
@@ -133,8 +146,9 @@ test('custom 1: miss content c# for meta', () => {
             'content*' : 'csharp'
         }, 'head >')
     ]
-    const results = c.check(custom).getResults()
-    expect(results).toContain('There are 3 <meta> tags without content*=csharp')
+    c.check(custom, results => {
+        expect(results).toContain('There are 3 <meta> tags without content*=csharp')
+    })
 })
 
 test('custom 2: check meta[name=robots] exists', () => {
@@ -147,8 +161,9 @@ test('custom 2: check meta[name=robots] exists', () => {
             return null
         })
     ]
-    const results = c.check(custom).getResults()
-    expect(results).toContain('This HTML has meta[name=robots] tag.')
+    c.check(custom, results => {
+        expect(results).toContain('This HTML has meta[name=robots] tag.')
+    })
 })
 
 test('custom 3: count a[rel=nofollow]', () => {
@@ -163,15 +178,19 @@ test('custom 3: count a[rel=nofollow]', () => {
             return 'There is no tag with rel=nofollow'
         })
     ]
+
     let c = new Checker(validHtmlText)
-    let results = c.check(custom).getResults()
-    expect(results).toContain('There is 1 <a> tags with rel=nofollow')
+    c.check(custom, results => {
+        expect(results).toContain('There is 1 <a> tags with rel=nofollow')
+    })
+
     c = new Checker(invalidHtmlText)
-    results = c.check(custom).getResults()
-    expect(results).toContain('There is no tag with rel=nofollow')
+    c.check(custom, results => {
+        expect(results).toContain('There is no tag with rel=nofollow')
+    })
 })
 
-const expectFileText = `There is 1 <a> tag without rel
+const expectOutputText = `There is 1 <a> tag without rel
 There are 2 <img> tags without alt
 This HTML without <title> tag
 This HTML without <meta> tag with name=descriptions
@@ -179,22 +198,56 @@ This HTML without <meta> tag with name=keywords
 This HTML have more than 15 <strong> tag(s)
 This HTML have more than 1 <h1> tag(s)`
 
-test('test write results', () => {
+test('test write to stream', () => {
     const filepath = path.join(__dirname, '__output.txt')
     const writer = fs.createWriteStream(filepath)
     const c = new Checker(invalidHtmlText, writer)
-    c.check(rules.definedRules.defaultRuleList).writeResults()
-    writer.on('finish', () => {
+    c.check(rules.definedRules.defaultRuleList, () => {
         const writeContent = fs.readFileSync(filepath).toString()
-        expect(writeContent).toBe(expectFileText)
+        expect(writeContent).toBe(expectOutputText)
         fs.unlinkSync(filepath)
     })
 })
 
-// test('test read from stream', () => {
-//     const filepath = path.join(__dirname, '__output.txt')
-//     const reader = fs.createReadStream(filepath)
-//     const c = new Checker(reader)
-//     const results = c.check(rules.definedRules.defaultRuleList).getResults()
-//     expect(results.length).toBe(7)
-// })
+test('test write to file path', () => {
+    const filepath = path.join(__dirname, '__output2.txt')
+    const c = new Checker(invalidHtmlText, filepath)
+    c.check(rules.definedRules.defaultRuleList, () => {
+        const writeContent = fs.readFileSync(filepath).toString()
+        expect(writeContent).toBe(expectOutputText)
+        fs.unlinkSync(filepath)
+    })
+})
+
+test('test write to console', () => {
+    /* eslint no-console: "off" */
+    const _log = console.log
+    console.outText = ''
+    console.log = function() {
+        _log.call(arguments)
+        console.outText += arguments[0]
+    }
+    const c = new Checker(invalidHtmlText, console)
+    c.check(rules.definedRules.defaultRuleList, () => {
+        expect(console.outText).toBe(expectOutputText)
+    })
+})
+
+test('test read from stream', () => {
+    const filepath = path.join(__dirname, '__input.txt')
+    const reader = fs.createReadStream(filepath)
+    const c = new Checker(reader)
+    c.check(rules.definedRules.defaultRuleList, (results) => {
+        expect(results.length).toBe(7)
+    })
+})
+
+test('test read from http request stream 2', () => {
+    const url = 'https://raw.githubusercontent.com/doha99/seo-html-defect-checker/master/tests/__input.txt'
+    request(url).on('response', response => {
+        const c = new Checker(response)
+        c.check(rules.definedRules.defaultRuleList, (results) => {
+            expect(results.length).toBe(7)
+        })
+    })
+})
