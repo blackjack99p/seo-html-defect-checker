@@ -65,6 +65,8 @@ c.check(Rules.definedRules.defaultRuleList, (results) => { // results is array
   // manipulate results
 })
 ```
+<a href="https://runkit.com/embed/2rz6mtegby7k" target="_blank">click here to test it</a>
+
 
 And you can customize the rules list such as
 ```javascript
@@ -79,6 +81,7 @@ c.check(myRules, results => {
   console.log(results)
 })
 ```
+<a href="https://runkit.com/embed/piks9milyb0x" target="_blank">click here to test it</a>
 
 Beside that you can customize the rule throw 4 objects:
 ```javascripts
