@@ -55,6 +55,7 @@ c.check([Rules.definedRules.aTagWithoutRel], (results) => {
   // manipulate results
 })
 ```
+<a href="https://runkit.com/embed/2rz6mtegby7k" target="_blank">click here to test it</a>
 
 There is a defined rule list that include 7 rules as follows example:
 ```javascript
@@ -65,8 +66,6 @@ c.check(Rules.definedRules.defaultRuleList, (results) => { // results is array
   // manipulate results
 })
 ```
-<a href="https://runkit.com/embed/2rz6mtegby7k" target="_blank">click here to test it</a>
-
 
 And you can customize the rules list such as
 ```javascript
@@ -84,7 +83,7 @@ c.check(myRules, results => {
 <a href="https://runkit.com/embed/piks9milyb0x" target="_blank">click here to test it</a>
 
 Beside that you can customize the rule throw 4 objects:
-```javascripts
+```javascript
 Rules = {
   //....
   MissAttributeRule,  // check tags that don't have some specific attributes
@@ -94,7 +93,7 @@ Rules = {
 }
 ```
 Examples:
-```javascripts
+```javascript
 const {MissAttributeRule, MissTag, MoreTagThan} = Rules
 const r1 = new MissAttributeRule('img', {
     alt: null,
@@ -108,7 +107,7 @@ c.check(rules, results => {
 })
 ```
 
-```javascripts
+```javascript
 const {CustomRule} = Rules
 const r4 = new CustomRule('meta', {
         'keywords*': 'shopping'
@@ -126,7 +125,7 @@ c.check([r4], results => {
 ```
 
 And you can customize your selector query
-```javascripts
+```javascript
 const r5 = new CustomRule('p', {}, null, (dom, selector) => {
         var num = dom.count('p.highlight:not(.warning)')
         if (num == 0) {
